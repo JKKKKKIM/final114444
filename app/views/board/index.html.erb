@@ -1,0 +1,29 @@
+  
+  <div class = "container">
+    
+     
+      
+       <%  if user_signed_in? %>
+         <h2>로그인 된 계정 :  <%= current_user.email %><br></h2>
+            <a href= '/users/sign_out'>로그아웃</a> <br><br>
+        <% else %>
+          <a href= '/users/sign_in'>로그인</a> <br><br>
+     <% end %>
+      
+ 
+    
+      
+      <% @posts.each do |p| %>
+      
+       제목 : <a href="/show/<%=p.id%>"> <%=p.title %></a> <br>
+       작성자 : <%= p.editor %> </a><br>
+       내용 : <%= p.content %>
+        
+      <br>
+      <hr>
+      <% end %>
+
+        <a class="btn btn-primary btn-lg btn-block" href="/new" role="button">게시판등록하기</a><br><br>
+
+  </div>
+    

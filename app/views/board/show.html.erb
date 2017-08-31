@@ -1,0 +1,57 @@
+ 
+
+ <div class= "container">
+     
+ 
+     
+       <%  if user_signed_in? %>
+         <%  if @show_post.editor.eql? current_user.email %>
+  
+                 <a href= "/edit/<%=@show_post.id%>"><h3>수정</h3></a>
+                 <a href= "/delete/<%=@show_post.id%>"><h3>삭제</h3></a>
+         <% end %>
+     
+        <% end %>
+             
+       
+       
+       <br><br><br>
+       <form action = "/reply_create" method = "POST">
+      <div class="form-group"> 
+          <input type = "hidden" value="<%= @show_post.id %>" name = "post_id" >
+         <h4>댓글달기</h4>
+      </div>
+      <div class="form-group">
+          <label for="exampleInputPassword1">작성자</label>
+        <%  if user_signed_in? %>
+               <input name = "reply_editor" id="input_editor" type="text" value = "<%= current_user.email %>" data-length="10">
+              <% else %>
+               <input name = "reply_editor" id="input_editor" type="text" data-length="10">
+        <% end %>
+  
+      </div>
+      
+      <div class="form-group">
+        <label for="exampleInputPassword1">내용</label>
+        <textarea class="form-control" name = "reply_content" rows="3" placeholder = "내용을 입력하세요" ></textarea>
+      </div>
+      <button type="submit" class="btn btn-default">작성</button>
+      
+        </form>
+    
+        <% @replies.each do |c| %>
+          <br>
+          
+          작성자: <%= c.editor %> <br>
+          내용: <%= c.content %> <br>
+          <%  if user_signed_in? %>
+           <%  if c.editor.eql? current_user.email %>
+                <a href= "/reply_delete/<%= c.id %>/<%= @show_post.id %>">[댓글 삭제]</a>
+             <% end %>
+         <% end %>
+         
+          <br>
+        <% end %>
+    
+ </div>
+      
